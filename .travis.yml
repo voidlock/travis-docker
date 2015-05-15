@@ -3,11 +3,11 @@ install:
 
 before_script:
   - docker version
-  - docker pull ubuntu:14.10
+  - docker pull redis:latest
 
 script:
-  - docker run -d -p 9090:9090 ubuntu:14.04 /bin/nc -l 9090
-  - nc -w 5 -z "$SLIRP_HOST" "9090"
+  - docker run -d -p 6379:6379 redis:lastest
+  - redis-cli info
 
 notifications:
   email: false

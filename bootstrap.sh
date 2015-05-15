@@ -13,7 +13,7 @@ set +x
 echo "Set required environment variables" >&2
 set -x
 export SLIRP_HOST="$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
-export SLIRP_PORTS="$(listify , 2375 $(seq 49153 49253))"
+export SLIRP_PORTS="$(listify , 2375 ${SLIRP_PORTS:-$(seq 49153 49253))}"
 export DOCKER_HOST="tcp://${SLIRP_HOST}:2375"
 export DOCKER_PORT_RANGE="2400:2500"
 

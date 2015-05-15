@@ -3,7 +3,7 @@ env:
     SLIRP_PORTS="6379"
 
 install:
-  - source bootstrap.sh
+  - source docker-bootstrap.sh
 
 before_script:
   - docker version

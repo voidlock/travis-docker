@@ -1,26 +1,26 @@
 #!/bin/bash
 
+ANSI_YELLOW="\033[33;1m"
+
 listify() {
   local IFS="$1"; shift; echo "$*";
 }
 
-set -xe
+bootstrap_header() {
+  echo -e "${ANSI_YELLOW}$1${ANSI_RESET}"
+}
 
 # version numbers
 COMPOSE_VERSION=${COMPOSE_VERSION:-1.2.0}
 
-set +x
-echo "Set required environment variables" >&2
-set -x
-export SLIRP_HOST="$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
-export SLIRP_PORTS="$(listify , 2375 ${SLIRP_PORTS:-$(seq 49153 49253))}"
-export DOCKER_HOST="tcp://${SLIRP_HOST}:2375"
-export DOCKER_PORT_RANGE="2400:2500"
+bootstrap_header "Set required environment variables"
+travis_cmd export\ SLIRP_HOST\=\"\$\(/sbin/ifconfig\ venet0:0\ \|\ grep\ \'inet\ addr\'\ \|\ awk\ -F:\ \'\{print\ \$2\}\'\ \|\ awk\ \'\{print\ \$1\}\'\)\" --echo
+travis_cmd export\ SLIRP_PORTS\=\"\$\(listify\ ,\ 2375\ \$\{SLIRP_PORTS:-\$\(seq\ 49153\ 49253\)\)\}\" --echo
+travis_cmd export\ DOCKER_HOST\=\"tcp://\$\{SLIRP_HOST\}:2375\" --echo
+travis_cmd export\ DOCKER_PORT_RANGE\=\"2400:2500\" --echo
+echo
 
-
-set +x
-echo "Disable post-install autorun" >&2
-set -x
+bootstrap_header "Disable post-install autorun"
 echo exit 101 | sudo tee /usr/sbin/policy-rc.d
 sudo chmod +x /usr/sbin/policy-rc.d
 

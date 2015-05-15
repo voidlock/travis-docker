@@ -15,7 +15,7 @@ COMPOSE_VERSION=${COMPOSE_VERSION:-1.2.0}
 
 bootstrap_header "Set required environment variables"
 travis_cmd export\ SLIRP_HOST\=\"\$\(/sbin/ifconfig\ venet0:0\ \|\ grep\ \'inet\ addr\'\ \|\ awk\ -F:\ \'\{print\ \$2\}\'\ \|\ awk\ \'\{print\ \$1\}\'\)\" --echo
-travis_cmd export\ SLIRP_PORTS\=\"\$\(listify\ ,\ 2375\ \$\{SLIRP_PORTS:-\$\(seq\ 49153\ 49253\)\)\}\" --echo
+travis_cmd export\ SLIRP_PORTS\=\"\$\(listify\ ,\ 2375\ \$\{SLIRP_PORTS:-\$\(seq\ 49153\ 49253\)\}\)\" --echo
 travis_cmd export\ DOCKER_HOST\=\"tcp://\$\{SLIRP_HOST\}:2375\" --echo
 travis_cmd export\ DOCKER_PORT_RANGE\=\"2400:2500\" --echo
 echo

@@ -10,7 +10,9 @@ before_script:
   - docker pull redis:latest
 
 script:
-  - docker run -d -p 6379:6379 redis:latest
+  - docker run --name=redis -d -p 6379:6379 redis:latest
+  - docker ps
+  - docker port redis
   - redis-cli info
 
 notifications:

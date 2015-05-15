@@ -8,7 +8,7 @@ The following is a sample `.travis.yml` file:
 
 ```yaml
 install:
-  - curl -sLo - https://raw.githubusercontent.com/voidlock/travis-docker/master/docker-bootstrap.sh | source /dev/stdin
+  - source <(curl -sLo - https://raw.githubusercontent.com/voidlock/travis-docker/master/docker-bootstrap.sh)
 
 script:
   - docker version
